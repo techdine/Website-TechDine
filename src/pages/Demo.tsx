@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { Calendar, CheckCircle2, Clock } from 'lucide-react';
+import { Calendar, CheckCircle2, Clock, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { createClient } from '@supabase/supabase-js';
 
 interface DemoForm {
   name: string;
@@ -13,7 +15,25 @@ interface DemoForm {
   message: string;
 }
 
+// Initialize Supabase client (outside component to avoid recreating)
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Check if environment variables are set
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('⚠️ Supabase environment variables are missing!');
+  console.error('Make sure .env file has:');
+  console.error('VITE_SUPABASE_URL=your_url');
+  console.error('VITE_SUPABASE_ANON_KEY=your_key');
+}
+
+const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
+
 export default function Demo() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -21,10 +41,57 @@ export default function Demo() {
     reset,
   } = useForm<DemoForm>();
 
-  const onSubmit = (data: DemoForm) => {
-    console.log('Demo Booking Data:', data);
-    alert('Thank you for booking a demo! We will contact you shortly to confirm your appointment.');
-    reset();
+  const onSubmit = async (data: DemoForm) => {
+    setIsSubmitting(true);
+    setSubmitSuccess(false);
+    setSubmitError(null);
+
+    try {
+      console.log('📤 Submitting demo booking:', data);
+
+      // Insert into Supabase
+      const { data: insertedData, error } = await supabase
+        .from('demo_bookings')
+        .insert([
+          {
+            name: data.name,
+            business_name: data.businessName,
+            phone: data.phone,
+            email: data.email,
+            business_type: data.businessType,
+            preferred_date: data.preferredDate,
+            preferred_time: data.preferredTime,
+            message: data.message || null,
+            status: 'pending',
+          },
+        ])
+        .select();
+
+      if (error) {
+        console.error('❌ Supabase error:', error);
+        throw new Error(error.message || 'Failed to submit demo booking');
+      }
+
+      console.log('✅ Demo booking saved:', insertedData);
+
+      // Success!
+      setSubmitSuccess(true);
+      
+      setTimeout(() => {
+        reset();
+        setSubmitSuccess(false);
+      }, 5000);
+    } catch (error: any) {
+      console.error('❌ Error submitting demo booking:', error);
+      setSubmitError(error.message || 'Something went wrong');
+      
+      // Show user-friendly error
+      alert(
+        '❌ Unable to submit demo booking. Please try again or contact us directly via WhatsApp at +91-6203653946'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fadeInUp = {
@@ -44,6 +111,33 @@ export default function Demo() {
 
   return (
     <div className="pt-16">
+      {/* Success Toast */}
+      {submitSuccess && (
+        <div className="fixed top-20 right-4 z-50 bg-green-600 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 animate-fade-in">
+          <CheckCircle2 className="w-6 h-6" />
+          <div>
+            <p className="font-semibold">Demo Booked Successfully!</p>
+            <p className="text-sm text-green-100">We'll contact you within 24 hours to confirm.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Error Toast */}
+      {submitError && (
+        <div className="fixed top-20 right-4 z-50 bg-red-600 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3">
+          <div>
+            <p className="font-semibold">Submission Failed</p>
+            <p className="text-sm text-red-100">{submitError}</p>
+          </div>
+          <button
+            onClick={() => setSubmitError(null)}
+            className="ml-4 text-white hover:text-red-200"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeInUp} className="text-center mb-16">
@@ -71,8 +165,9 @@ export default function Demo() {
                     <input
                       id="name"
                       type="text"
+                      disabled={isSubmitting}
                       {...register('name', { required: 'Name is required' })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="John Doe"
                     />
                     {errors.name && (
@@ -87,8 +182,9 @@ export default function Demo() {
                     <input
                       id="businessName"
                       type="text"
+                      disabled={isSubmitting}
                       {...register('businessName', { required: 'Business name is required' })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="Your Restaurant Name"
                     />
                     {errors.businessName && (
@@ -103,8 +199,9 @@ export default function Demo() {
                     <input
                       id="phone"
                       type="tel"
+                      disabled={isSubmitting}
                       {...register('phone', { required: 'Phone number is required' })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="+91-XXXXXXXXXX"
                     />
                     {errors.phone && (
@@ -119,6 +216,7 @@ export default function Demo() {
                     <input
                       id="email"
                       type="email"
+                      disabled={isSubmitting}
                       {...register('email', {
                         required: 'Email is required',
                         pattern: {
@@ -126,7 +224,7 @@ export default function Demo() {
                           message: 'Invalid email address',
                         },
                       })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="john@example.com"
                     />
                     {errors.email && (
@@ -140,8 +238,9 @@ export default function Demo() {
                     </label>
                     <select
                       id="businessType"
+                      disabled={isSubmitting}
                       {...register('businessType', { required: 'Please select a business type' })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                     >
                       <option value="">Select your business type</option>
                       <option value="restaurant">Restaurant</option>
@@ -164,9 +263,10 @@ export default function Demo() {
                       <input
                         id="preferredDate"
                         type="date"
+                        disabled={isSubmitting}
                         {...register('preferredDate', { required: 'Date is required' })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                        min={new Date().toISOString().split('T')[0]}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        min={new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
                       />
                       {errors.preferredDate && (
                         <p className="mt-1 text-sm text-red-600">{errors.preferredDate.message}</p>
@@ -179,8 +279,9 @@ export default function Demo() {
                       </label>
                       <select
                         id="preferredTime"
+                        disabled={isSubmitting}
                         {...register('preferredTime', { required: 'Time is required' })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                       >
                         <option value="">Select time</option>
                         <option value="10:00">10:00 AM</option>
@@ -203,20 +304,39 @@ export default function Demo() {
                     </label>
                     <textarea
                       id="message"
+                      disabled={isSubmitting}
                       {...register('message')}
                       rows={3}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="Tell us about your specific needs or questions..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full px-6 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className={`w-full px-6 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all shadow-lg ${
+                      isSubmitting
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-blue-600 hover:bg-blue-700 transform hover:scale-105 shadow-blue-600/30'
+                    } text-white`}
                   >
-                    <Calendar className="w-5 h-5" />
-                    Book Demo
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Booking Demo...
+                      </>
+                    ) : (
+                      <>
+                        <Calendar className="w-5 h-5" />
+                        Book Demo
+                      </>
+                    )}
                   </button>
+
+                  <p className="text-sm text-gray-500 text-center">
+                    By submitting, you agree to our Terms of Service and Privacy Policy
+                  </p>
                 </form>
               </div>
             </motion.div>

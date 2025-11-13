@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { Mail, Phone, MapPin, MessageCircle, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageCircle, Send, Loader2, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { submitToWeb3Forms } from '../utils/web3forms';
 
 interface ContactForm {
   name: string;
@@ -11,6 +13,9 @@ interface ContactForm {
 }
 
 export default function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -18,10 +23,38 @@ export default function Contact() {
     reset,
   } = useForm<ContactForm>();
 
-  const onSubmit = (data: ContactForm) => {
-    console.log('Contact Form Data:', data);
-    alert('Thank you for contacting us! We will get back to you soon.');
-    reset();
+  const onSubmit = async (data: ContactForm) => {
+    setIsSubmitting(true);
+    setSubmitSuccess(false);
+
+    try {
+      const result = await submitToWeb3Forms(
+        import.meta.env.VITE_WEB3FORMS_CONTACT_KEY,
+        {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          business_type: data.businessType,
+          message: data.message,
+          subject: 'New Contact Form Submission - TechDine',
+          from_name: 'TechDine Website',
+        }
+      );
+
+      if (result.success) {
+        setSubmitSuccess(true);
+        setTimeout(() => {
+          reset();
+          setSubmitSuccess(false);
+        }, 5000);
+      } else {
+        alert('❌ ' + result.message);
+      }
+    } catch (error) {
+      alert('❌ Something went wrong. Please try again or contact us directly via WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fadeInUp = {
@@ -59,6 +92,17 @@ export default function Contact() {
 
   return (
     <div className="pt-16">
+      {/* Success Toast */}
+      {submitSuccess && (
+        <div className="fixed top-20 right-4 z-50 bg-green-600 text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3">
+          <CheckCircle2 className="w-6 h-6" />
+          <div>
+            <p className="font-semibold">Message Sent!</p>
+            <p className="text-sm text-green-100">We'll get back to you within 24 hours.</p>
+          </div>
+        </div>
+      )}
+
       <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeInUp} className="text-center mb-16">
@@ -84,8 +128,9 @@ export default function Contact() {
                     <input
                       id="name"
                       type="text"
+                      disabled={isSubmitting}
                       {...register('name', { required: 'Name is required' })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="John Doe"
                     />
                     {errors.name && (
@@ -100,6 +145,7 @@ export default function Contact() {
                     <input
                       id="email"
                       type="email"
+                      disabled={isSubmitting}
                       {...register('email', {
                         required: 'Email is required',
                         pattern: {
@@ -107,7 +153,7 @@ export default function Contact() {
                           message: 'Invalid email address',
                         },
                       })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="john@example.com"
                     />
                     {errors.email && (
@@ -122,8 +168,9 @@ export default function Contact() {
                     <input
                       id="phone"
                       type="tel"
+                      disabled={isSubmitting}
                       {...register('phone', { required: 'Phone number is required' })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="+91-XXXXXXXXXX"
                     />
                     {errors.phone && (
@@ -137,8 +184,9 @@ export default function Contact() {
                     </label>
                     <select
                       id="businessType"
+                      disabled={isSubmitting}
                       {...register('businessType', { required: 'Please select a business type' })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                     >
                       <option value="">Select your business type</option>
                       <option value="restaurant">Restaurant</option>
@@ -158,9 +206,10 @@ export default function Contact() {
                     </label>
                     <textarea
                       id="message"
+                      disabled={isSubmitting}
                       {...register('message', { required: 'Message is required' })}
                       rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="Tell us about your requirements..."
                     />
                     {errors.message && (
@@ -170,10 +219,24 @@ export default function Contact() {
 
                   <button
                     type="submit"
-                    className="w-full px-6 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className={`w-full px-6 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all shadow-lg ${
+                      isSubmitting
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-blue-600 hover:bg-blue-700 transform hover:scale-105 shadow-blue-600/30'
+                    } text-white`}
                   >
-                    <Send className="w-5 h-5" />
-                    Send Message
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5" />
+                        Send Message
+                      </>
+                    )}
                   </button>
                 </form>
               </div>
