@@ -28,30 +28,30 @@ export default function About() {
 
   const team = [
     {
-      name: 'Rahul Mehta',
+      name: 'Yash Verma',
       role: 'Founder & CEO',
-      avatar: 'RM',
-      bio: '10+ years in restaurant tech',
+      avatar: 'YV',
+      // bio: '10+ years in restaurant tech',
     },
     {
-      name: 'Sneha Kapoor',
+      name: 'Vinay Kumar Verma',
       role: 'Head of Product',
-      avatar: 'SK',
-      bio: 'Former product lead at major food-tech',
+      avatar: 'VKV',
+      // bio: 'Former product lead at major food-tech',
     },
-    {
-      name: 'Vikram Singh',
-      role: 'Chief Technology Officer',
-      avatar: 'VS',
-      bio: 'Built solutions for 100+ restaurants',
-    },
+    // {
+    //   name: 'Vikram Singh',
+    //   role: 'Chief Technology Officer',
+    //   avatar: 'VS',
+    //   bio: 'Built solutions for 100+ restaurants',
+    // },
   ];
 
   const milestones = [
     { year: '2025', event: 'TechDine founded with a vision to digitize Indian restaurants' },
     { year: '2025', event: 'Launched QR ordering system and digital menu platform' },
-    { year: '2026', event: 'Reached 50+ restaurant partners across major cities' },
-    { year: '2025', event: 'Expanding with WhatsApp bot and advanced analytics' },
+    { year: '2025', event: 'Reached 50+ restaurant partners across major cities' },
+    // { year: '2025', event: 'Expanding with WhatsApp bot and advanced analytics' },
   ];
 
   return (
@@ -178,7 +178,7 @@ export default function About() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
                 <p className="text-blue-600 font-medium mb-2">{member.role}</p>
-                <p className="text-gray-600">{member.bio}</p>
+                {/* <p className="text-gray-600">{member.bio}</p> */}
               </motion.div>
             ))}
           </div>
