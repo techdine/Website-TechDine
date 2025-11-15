@@ -81,7 +81,7 @@ export default function About() {
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Founded in 2023, TechDine emerged from conversations with dozens of restaurant owners who were frustrated with the available technology options. They wanted something simple, affordable, and built for the Indian market.
+                  Founded in 2025, TechDine emerged from conversations with dozens of restaurant owners who were frustrated with the available technology options. They wanted something simple, affordable, and built for the Indian market.
                 </p>
                 <p>
                   We started with a QR code ordering system that any restaurant could set up in minutes. Today, we've grown into a comprehensive platform that handles everything from digital menus to customer engagement through WhatsApp.
