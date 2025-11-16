@@ -4,7 +4,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://techdine.vercel.app/</loc>
-    <lastmod>2025-11-16</lastmod>
+    <lastmod>2025-01-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,7 +12,7 @@
   <!-- About Page -->
   <url>
     <loc>https://techdine.vercel.app/about</loc>
-    <lastmod>2025-11-16</lastmod>
+    <lastmod>2025-01-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -20,7 +20,7 @@
   <!-- Contact Page -->
   <url>
     <loc>https://techdine.vercel.app/contact</loc>
-    <lastmod>2025-11-16</lastmod>
+    <lastmod>2025-01-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -28,7 +28,7 @@
   <!-- Demo Booking Page -->
   <url>
     <loc>https://techdine.vercel.app/demo</loc>
-    <lastmod>2025-11-16</lastmod>
+    <lastmod>2025-01-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -36,7 +36,7 @@
   <!-- Privacy Policy -->
   <url>
     <loc>https://techdine.vercel.app/privacy-policy</loc>
-    <lastmod>2025-11-16</lastmod>
+    <lastmod>2025-01-16</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -44,7 +44,7 @@
   <!-- Terms of Service -->
   <url>
     <loc>https://techdine.vercel.app/terms-of-service</loc>
-    <lastmod>2025-11-16</lastmod>
+    <lastmod>2025-01-16</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
