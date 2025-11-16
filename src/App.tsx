@@ -36,7 +36,7 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             {/* Secret admin URL - change 'td-dashboard-2025' to your preferred secret path */}
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/jaipur" element={<AdminDashboard />} />
           </Routes>
         </main>
         <Footer />

@@ -1,22 +1,185 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/jpg" href="/src/assets/Tech Dine_page-fav.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <!-- <link rel="manifest" href="/site.webmanifest"> -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- To stay verified, don't remove the meta tag, even after verification succeeds. -->
-  <meta name="google-site-verification" content="TLKMdpX7pLO8ccuZdmmUNI93Ffaz7zMLUSZ9D5xDaTw" />
-  <title>TechDine SaaS Landing Page</title>
-</head>
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- ============================================ -->
+    <!-- SEO META TAGS -->
+    <!-- ============================================ -->
+    
+    <!-- Primary Meta Tags -->
+    <title>TechDine - Smart Restaurant Management Platform | QR Ordering & Digital Menu Solutions</title>
+    <meta name="title" content="TechDine - Smart Restaurant Management Platform | QR Ordering & Digital Menu Solutions" />
+    <meta name="description" content="Transform your restaurant with TechDine's all-in-one management platform. QR code ordering, digital menus, WhatsApp integration, and analytics. Trusted by restaurants across India. Book a free demo today!" />
+    <meta name="keywords" content="restaurant management system, QR code ordering, digital menu, restaurant software India, food ordering system, WhatsApp integration, restaurant POS, cafe management software" />
+    <meta name="author" content="TechDine" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://techdine.vercel.app/" />
+    
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://techdine.vercel.app/" />
+    <meta property="og:title" content="TechDine - Smart Restaurant Management Platform" />
+    <meta property="og:description" content="Transform your restaurant with TechDine's all-in-one management platform. QR ordering, digital menus, WhatsApp integration & more. Book your free demo!" />
+    <meta property="og:image" content="https://techdine.vercel.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="TechDine" />
+    <meta property="og:locale" content="en_IN" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://techdine.vercel.app/" />
+    <meta name="twitter:title" content="TechDine - Smart Restaurant Management Platform" />
+    <meta name="twitter:description" content="Transform your restaurant with TechDine's all-in-one management platform. QR ordering, digital menus, WhatsApp integration & more." />
+    <meta name="twitter:image" content="https://techdine.vercel.app/twitter-card.jpg" />
+    <meta name="twitter:site" content="@Tech_Dine" />
+    <meta name="twitter:creator" content="@Tech_Dine" />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#0066FF" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <!-- Geo Tags -->
+    <meta name="geo.region" content="IN-RJ" />
+    <meta name="geo.placename" content="Jaipur, Rajasthan" />
+    <meta name="geo.position" content="26.9124;75.7873" />
+    <meta name="ICBM" content="26.9124, 75.7873" />
+    
+    <!-- ============================================ -->
+    <!-- STRUCTURED DATA (Schema.org) -->
+    <!-- ============================================ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "TechDine",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "999",
+        "priceCurrency": "INR"
+      },
+      "description": "Complete restaurant management platform with QR ordering, digital menus, and WhatsApp integration",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "50"
+      }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TechDine",
+      "url": "https://techdine.vercel.app",
+      "logo": "https://techdine.vercel.app/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-6203653946",
+        "contactType": "Customer Service",
+        "email": "techdine360@gmail.com",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61582975683965",
+        "https://x.com/Tech_Dine",
+        "https://www.instagram.com/tech.dine/"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kukas",
+        "addressRegion": "Rajasthan",
+        "addressCountry": "IN"
+      }
+    }
+    </script>
+    
+    <!-- ============================================ -->
+    <!-- GOOGLE ANALYTICS 4 (GA4) -->
+    <!-- ⚠️ REPLACE 'G-DEMO123456' WITH YOUR REAL MEASUREMENT ID -->
+    <!-- ============================================ -->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NJPMHLW0FL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      // ⚠️ REPLACE 'G-DEMO123456' with your actual Measurement ID
+      gtag('config', 'G-NJPMHLW0FL', {
+        'send_page_view': true,
+        'anonymize_ip': true
+      });
+      
+      // Custom event tracking function (used throughout the site)
+      window.trackEvent = function(eventName, eventParams) {
+        gtag('event', eventName, eventParams);
+      };
+    </script>
+    
+    <!-- ============================================ -->
+    <!-- FAVICON & APP ICONS -->
+    <!-- ============================================ -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- ============================================ -->
+    <!-- PRECONNECT FOR PERFORMANCE -->
+    <!-- ============================================ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  </head>
+  
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- ============================================ -->
+    <!-- INSTRUCTIONS FOR ANALYTICS -->
+    <!-- ============================================ -->
+    <!-- 
+    TO ACTIVATE GOOGLE ANALYTICS:
+    1. Find all instances of 'G-DEMO123456' in this file (there are 2)
+    2. Replace with your actual GA4 Measurement ID
+    3. Save and redeploy
+    
+    TO TRACK EVENTS:
+    Use this code anywhere in your React components:
+    
+    // Track button clicks
+    onClick={() => window.trackEvent('button_click', {
+      button_name: 'Book Demo',
+      page: 'Home'
+    })}
+    
+    // Track form submissions
+    window.trackEvent('form_submit', {
+      form_name: 'Contact Form'
+    });
+    
+    // Track social clicks (already added to Footer)
+    window.trackEvent('social_click', {
+      platform: 'instagram',
+      location: 'footer'
+    });
+    -->
+  </body>
 </html>

@@ -13,7 +13,7 @@ export default function Footer() {
               </div>
               <span className="text-2xl font-bold text-white">TechDine</span>
             </div>
-            <p className="text-sm mb-4">Empowering restaurants with technology</p>
+            <p className="text-sm mb-4">Empowering restaurants with cutting-edge technology for seamless operations and enhanced customer experiences.</p>
             <div className="flex gap-3">
               <a
                 href="https://www.facebook.com/profile.php?id=61582975683965"
