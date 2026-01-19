@@ -228,7 +228,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Join Us on This Journey</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Join Us on This Journey</h2>
             <p className="text-xl text-blue-100 mb-8">
               We're just getting started. Be part of the restaurant technology revolution.
             </p>

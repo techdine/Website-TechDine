@@ -248,7 +248,7 @@ export default function Contact() {
               className="space-y-6"
             >
               <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-xl p-8 text-white">
-                <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
+                <h3 className="text-2xl font-bold text-white mb-4">Contact Information</h3>
                 <p className="text-blue-100 mb-8">
                   Reach out to us through any of these channels. We're here to help!
                 </p>

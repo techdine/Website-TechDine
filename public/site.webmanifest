@@ -1,0 +1,21 @@
+{
+  "name": "TechDine - Smart Restaurant Management Platform",
+  "short_name": "TechDine",
+  "description": "Complete restaurant management platform with QR ordering, digital menus, and WhatsApp integration",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0066FF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "food", "productivity"],
+  "lang": "en-IN",
+  "dir": "ltr"
+}

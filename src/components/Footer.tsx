@@ -58,10 +58,12 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Products</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="/#products" className="hover:text-white transition-colors">QR Ordering</a></li>
-              <li><a href="/#products" className="hover:text-white transition-colors">Digital Menu</a></li>
-              <li><a href="/#products" className="hover:text-white transition-colors">WhatsApp Bot</a></li>
-              <li><a href="/#products" className="hover:text-white transition-colors">Coming Soon</a></li>
+              <li><Link to="/features?tab=dashboard" className="hover:text-white transition-colors">Table Management</Link></li>
+              <li><Link to="/features?tab=dashboard" className="hover:text-white transition-colors">Order Management</Link></li>
+              <li><Link to="/features?tab=dashboard" className="hover:text-white transition-colors">QR Menu</Link></li>
+              <li><Link to="/features?tab=admin" className="hover:text-white transition-colors">Inventory</Link></li>
+              <li><Link to="/features?tab=admin" className="hover:text-white transition-colors">Analytics</Link></li>
+              <li><Link to="/features?tab=dashboard" className="hover:text-white transition-colors">Billing</Link></li>
             </ul>
           </div>
 

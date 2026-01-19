@@ -28,7 +28,7 @@ export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  
+
   const [bookings, setBookings] = useState<DemoBooking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -101,7 +101,7 @@ export default function AdminDashboard() {
         throw updateError;
       }
 
-      setBookings(prev => 
+      setBookings(prev =>
         prev.map(b => b.id === id ? { ...b, status: newStatus } : b)
       );
 
@@ -220,6 +220,21 @@ export default function AdminDashboard() {
                 Login
               </button>
             </form>
+
+            <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+              <p className="text-sm text-gray-500 mb-4">Just looking around?</p>
+              <button
+                onClick={() => {
+                  // In a real app, this would redirect to a demo environment
+                  // For now, we'll simulate a login to a read-only view or just show a message
+                  alert("This would open the interactive dashboard demo. (Coming Soon)");
+                }}
+                className="w-full px-6 py-3 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg font-semibold hover:border-blue-400 hover:text-blue-600 transition-all flex items-center justify-center gap-2"
+              >
+                <RefreshCw className="w-4 h-4" />
+                Try Live Demo Dashboard
+              </button>
+            </div>
 
             <div className="mt-6 text-center">
               <a href="/" className="text-sm text-blue-600 hover:underline">
